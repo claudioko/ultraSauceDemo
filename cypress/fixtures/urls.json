@@ -1,0 +1,8 @@
+{
+    "productListUrl": "/inventory.html",
+    "productPageUrl": "/inventory-item.html",
+    "checkOutStepOneUrl": "/checkout-step-one.html",
+    "checkOutStepTwoUrl": "/checkout-step-two.html",
+    "checkOutCompleteUrl": "/checkout-complete.html",
+    "baseUrl": "www.saucedemo.com"
+  }

@@ -1,5 +1,6 @@
 import '../support/commands';
 import userData from '../fixtures/userData.json';
+import urls from '../fixtures/urls.json';
 
 const standardUser = Cypress.env('standardUser');
 const problemUser = Cypress.env('problemUser');
@@ -10,15 +11,15 @@ describe('template spec', () => {
     
   });
 
-  it ('Following the sauce demo site requirements, create a test to validate the E2E flow of the standard user defined as below:', () => {
+  it ('1. Following the sauce demo site requirements, create a test to validate the E2E flow of the standard user defined as below:', () => {
 
     //Visit saucedemo.com and confirm the user lands on the login screen.
     cy.visit('/');
-    cy.url().should('include', 'www.saucedemo.com');
+    cy.url().should('include', urls.baseUrl);
 
     //Login using standard_user and confirm the user lands on the product list screen.
     cy.login(standardUser.userName, standardUser.password);
-    cy.url().should('include', 'inventory.html');
+    cy.url().should('include', urls.productListUrl);
 
     //Filter by Price (low to high) and click Add to cart for the first item; confirm that the Remove button appears, and the number 1 appears on the cart icon.
     cy.getByData('product_sort_container').select('lohi');
@@ -28,7 +29,7 @@ describe('template spec', () => {
     //Click on the title of the second item and confirm the user lands on the product detail screen.
     cy.get('.inventory_list .inventory_item').eq(1).find('.inventory_item_name').click();
         
-    cy.url().should('include', 'inventory-item.html');
+    cy.url().should('include', urls.productPageUrl);
     
     //Click Add to cart button and confirm the Remove button, and the number 2 appears on the Cart icon.
     cy.get('.inventory_details_desc_container button:first').click();
@@ -42,37 +43,37 @@ describe('template spec', () => {
 
     //Click on the Checkout button and should land on the 'Checkout: Your information' screen.
     cy.getByData('checkout').click();
-    cy.url().should('include', 'checkout-step-one.html');
+    cy.url().should('include', urls.checkOutStepOneUrl);
 
     //Enter all the fields on the 'Checkout: Your information' screen, click the Continue button, and confirm landed on the 'Checkout: review' screen.
     cy.getByData('firstName').type(userData.firstName);
     cy.getByData('lastName').type(userData.lastName);
     cy.getByData('postalCode').type(userData.postalCode);
     cy.getByData('continue').click();
-    cy.url().should('include','checkout-step-two.html');
+    cy.url().should('include',urls.checkOutStepTwoUrl);
 
     //Confirm the two items and the total price match, then click the Finish button.
     cy.getByData('finish').click();
     
     //Should land on 'Checkout: Complete!' screen and click the Back Home button.
-    cy.url().should('include','checkout-complete.html');
+    cy.url().should('include',urls.checkOutCompleteUrl);
     cy.getByData('back-to-products').click();
 
     //Should land on the product list screen, click on the hamburger and click Logout.
-    cy.url().should('include', 'inventory.html');
+    cy.url().should('include', urls.productListUrl);
     cy.get('#react-burger-menu-btn').click();
     cy.get('#logout_sidebar_link').click();
   })
 
-  it ('Following the sauce demo site requirements, create a test to validate the E2E flow of the problem user defined as below:', () => {
+  it ('2. Following the sauce demo site requirements, create a test to validate the E2E flow of the problem user defined as below:', () => {
 
     //Visit saucedemo.com and confirm the user lands on the login screen.
     cy.visit('/');
-    cy.url().should('include', 'www.saucedemo.com');
+    cy.url().should('include', urls.baseUrl);
 
     //Login using problem_user and confirm the user lands on the product list page.
     cy.login(problemUser.userName, problemUser.password);
-    cy.url().should('include', 'inventory.html');
+    cy.url().should('include', urls.productListUrl);
     
     //Filter by 'Price (low to high)' and confirm the filter text did not change, and it is 'Name (A to Z).'
     cy.getByData('product_sort_container').select('lohi');
@@ -91,7 +92,7 @@ describe('template spec', () => {
 
     //Click on the Checkout button and should land on the 'Checkout: Your information' screen.
     cy.getByData('checkout').click();
-    cy.url().should('include', 'checkout-step-one.html');
+    cy.url().should('include', urls.checkOutStepOneUrl);
 
     //The user can't enter all the fields on the 'Checkout: Your information' screen and Should display an error message.
     cy.getByData('firstName').type(userData.firstName);
