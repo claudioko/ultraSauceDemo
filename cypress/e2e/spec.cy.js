@@ -37,9 +37,12 @@ describe('template spec', () => {
 
     cy.get('.inventory_details_desc_container button:first').invoke('text').should('eq', 'Remove');
     cy.get('span.shopping_cart_badge').invoke('text').should('eq', '2');
-
+   
     //Click on the Cart icon and confirm the 2 items on the Your cart screen are correct
+    
+    //missing confirm the 2 items are correct
     cy.get('.shopping_cart_link').click();
+
 
     //Click on the Checkout button and should land on the 'Checkout: Your information' screen.
     cy.getByData('checkout').click();
@@ -53,6 +56,8 @@ describe('template spec', () => {
     cy.url().should('include',urls.checkOutStepTwoUrl);
 
     //Confirm the two items and the total price match, then click the Finish button.
+
+    //missing confirm the two items adn the total price match
     cy.getByData('finish').click();
     
     //Should land on 'Checkout: Complete!' screen and click the Back Home button.
